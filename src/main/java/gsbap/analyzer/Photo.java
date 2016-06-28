@@ -1,4 +1,4 @@
-package gsbap;
+package gsbap.analyzer;
 
 
 import javax.imageio.ImageIO;

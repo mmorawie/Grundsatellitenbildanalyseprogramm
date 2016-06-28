@@ -1,17 +1,18 @@
-package gsbap;
+package gsbap.analyzer;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.net.*;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
-import javafx.scene.input.PickResult;
-import javafx.scene.input.TouchPoint;
 import org.json.JSONObject;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Scanner;
 
 
 public class LoaderAnalyzer {
@@ -46,6 +47,7 @@ public class LoaderAnalyzer {
     }
 
     public static String bestAsset(double lon, double lat){
+        System.out.println(" best asset");
         String charset = "UTF-8";
         String API_KEY = "MaqPDdbGPOTsIU3nSjF9ayrAQQ5zEYoY4ApiNSwz";
         String date = "2015-06-01";
@@ -98,21 +100,18 @@ public class LoaderAnalyzer {
         }
     }
 
-    public static void find(){
+    public static void find(double lon, double lat){
 
         Grid grid;
         /*
         krakow 19.93 50.06
         brasilia -15.793889, -47.882778
         new york 40.71,  -74.00
-
          */
-        //grid = loadImage(-47.88, -15.79 , 1);
-        //System.out.println( bestAsset(-47.88, -15.79));
         grid = loadImage( -47.88, -15.79 , 1);
         analyse(grid,6);
         try {
-            ImageIO.write(grid.img, "jpg", new File("./pictures/"+"aaaaa.jpg"));
+            ImageIO.write(grid.img, "jpg", new File("./src/main/resources/templates/"+"ccc1.jpg"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -120,6 +119,7 @@ public class LoaderAnalyzer {
 
     public static Grid loadImage(double lon,double lat, double rad){
         int rad2 = (int)Math.ceil( (rad/111)/0.025 );
+        System.out.println(" loading ..........." + rad + " " + rad2);
         double zeroLon = lon - rad2*0.025;
         double zeroLat = lat + rad2*0.025;
         Grid grid = new Grid(rad2*2 + 1);
@@ -133,6 +133,7 @@ public class LoaderAnalyzer {
     }
 
     public static double analyse(Grid grid, int rad){
+        System.out.println(" in -----------------------------------------------------" + rad);
         int w = grid.img.getWidth(); int h = grid.img.getHeight();
         int centerX = grid.img.getWidth()/2;
         int centerY = grid.img.getHeight()/2;
@@ -196,7 +197,7 @@ public class LoaderAnalyzer {
                 int clr=  grid.img.getRGB(x,y);
                 int  red   = (clr & 0x00ff0000) >> 16;
                 int  green = (clr & 0x0000ff00) >> 8;
-                score = score + green/255;
+                score = score + green/255.0/3.0;
             }
         }
         return score;

@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Grundsatellitenbildanalyseprogramm</title>
+    <meta http-equiv="Content-Type" lat="text/html; charset=UTF-8" />
+</head>
+<body
+        bgcolor="#f6f8e6"
+        style="font-family:courier;font-color:white;"
+>
+	<h1>Result</h1>
+
+    <p th:text="'input: ' + ${main.lon} + ', ' + ${main.lat}" />
+    <br/>
+    <p th:text="'green score: ' + ${main.gs}" />
+    <p th:text="'minimal distance: ' + ${main.min}" />
+    <p th:text="'' + ${main.other}" />
+
+
+    <a href="/main">back</a> <br/>
+
+</body>
+</html>
